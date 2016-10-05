@@ -11,13 +11,15 @@ public class MainRun {
         while (true) {
             System.out.println("Enter data");
 
-            IncomeData data = new IncomeData(sc.nextLine());
+            InData data = new InData(sc.nextLine());
 
             fsm.handlingData(data);
 
             System.out.println("State of FSM after check: " + fsm.getState());
 
             fsm.reset();
+
+
         }
     }
 }

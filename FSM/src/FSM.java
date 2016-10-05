@@ -1,41 +1,45 @@
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by Numl on 04.10.2016.
  */
 public class FSM {
-    private State state = State.UNKNOW;//состояние по умолчанию
+    private State state = State.UNKNOWN;//состояние по умолчанию
 
     public State getState() {
         return state;
     }
 
-    public void handlingData(IncomeData incomeData) {
-        char[] charArray = incomeData.getText().toCharArray();
-        Pattern p = Pattern.compile("[0-1]+");
-        Matcher m = p.matcher(incomeData.getText());
+    public void handlingData(InData inData) {
+        int numberOfZero = 0;
+        int numberOfOne = 0;
 
-        if (incomeData.getText() == null || "".equals(incomeData.getText())) {
+        if (inData.getText().equals("End")) {
+            System.exit(0);
+        }
+
+        if (inData.getText() == null || "".equals(inData.getText())) {
             state = State.INCORRECT_DATA;
             return;
         }
 
-        if (m.matches() && charArray.length % 2 == 0) {
-            state = State.YES0;
-            return;
-        }
-        else if (m.matches() && charArray.length % 2 != 0){
-            state = State.YES1;
-        }
-        else {
-            state = State.NO;
+        for (char aChar : inData.getText().toCharArray()) {
+            if (aChar == '0') {
+                numberOfZero++;
+            } else if (aChar == '1') {
+                numberOfOne++;
+            } else {
+                state = State.INCORRECT_DATA;
+                return;
+            }
         }
 
+        state = numberOfZero % 2 == 0 && numberOfOne % 2 != 0 ?
+                State.YES :
+                State.NO;
     }
 
     public void reset() {
-        state = State.UNKNOW;
+        state = State.UNKNOWN;
     }
 
 
