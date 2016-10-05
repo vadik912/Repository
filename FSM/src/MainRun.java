@@ -7,12 +7,11 @@ public class MainRun {
     public static void main(String[] args) {
         final FSM fsm = new FSM();
         final Scanner sc = new Scanner(System.in);
-        final IncomeData data = new IncomeData(sc.nextLine());
 
-        while (!"End".equals(data)) {
+        while (true) {
             System.out.println("Enter data");
 
-
+            IncomeData data = new IncomeData(sc.nextLine());
 
             fsm.handlingData(data);
 
